@@ -1,5 +1,6 @@
 import CentimeterToInches from './components-oppgaver/Opp-1';
 import Oppgave149 from './components-oppgaver/Opp-2';
+import Oppgave150 from './components-oppgaver/Opp-3';
 
 function App() {
   return (
@@ -12,8 +13,14 @@ function App() {
       
       <hr style={{ margin: '40px 0', border: '1px solid #ddd' }} />
       
-      <div>
+      <div style={{ marginBottom: '40px' }}>
         <Oppgave149 />
+      </div>
+      
+      <hr style={{ margin: '40px 0', border: '1px solid #ddd' }} />
+      
+      <div>
+        <Oppgave150 />
       </div>
     </div>
   );
