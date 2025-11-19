@@ -1,0 +1,231 @@
+import React, { useState, useEffect } from 'react';
+
+const Oppgave151 = () => {
+  const [ord, setOrd] = useState('');
+  const [tilbakemelding, setTilbakemelding] = useState('');
+  const [onsketLengde, setOnsketLengde] = useState(6);
+  const [antallBokstaver, setAntallBokstaver] = useState(0);
+
+  // b) Generer tilfeldig lengde ved første lasting og når brukeren ønsker det
+  const genererTilfeldigLengde = () => {
+    const nyLengde = Math.floor(Math.random() * 10) + 3; // 3-12 bokstaver
+    setOnsketLengde(nyLengde);
+    setOrd('');
+    setTilbakemelding('');
+  };
+
+  // Generer tilfeldig lengde ved første lasting
+  useEffect(() => {
+    genererTilfeldigLengde();
+  }, []);
+
+  // a) Sjekk ordet når det endres
+  const handleOrdEndring = (event) => {
+    const inputOrd = event.target.value;
+    setOrd(inputOrd);
+    
+    // Fjern mellomrom for å telle kun bokstaver
+    const ordUtenMellomrom = inputOrd.replace(/\s/g, '');
+    const lengde = ordUtenMellomrom.length;
+    setAntallBokstaver(lengde);
+
+    if (inputOrd === '') {
+      setTilbakemelding('');
+      return;
+    }
+
+    if (lengde === onsketLengde) {
+      setTilbakemelding({
+        type: 'success',
+        melding: `Bra! Ordet består av ${lengde} bokstaver.`,
+        emoji: '👍'
+      });
+    } else {
+      setTilbakemelding({
+        type: 'error',
+        melding: `Ordet ditt består av ${lengde} bokstaver.`,
+        emoji: '👎'
+      });
+    }
+  };
+
+  return (
+    <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto' }}>
+      <h2>Oppgave 1.51 - Ordlengdesjekker</h2>
+
+      {/* Del a) Input-felt med fast/valgt lengde */}
+      <div style={{ 
+        marginBottom: '30px', 
+        padding: '20px', 
+        border: '2px solid #007bff',
+        borderRadius: '8px',
+        backgroundColor: '#f8f9fa'
+      }}>
+        <h3 style={{ marginTop: 0, color: '#007bff' }}>a) Sjekk ordlengde</h3>
+        
+        <div style={{ marginBottom: '15px' }}>
+          <label 
+            htmlFor="ordInput"
+            style={{ 
+              display: 'block', 
+              marginBottom: '8px',
+              fontSize: '16px',
+              fontWeight: 'bold',
+              color: '#495057'
+            }}
+          >
+            Skriv et ord som består av {onsketLengde} bokstaver
+          </label>
+          <input
+            id="ordInput"
+            type="text"
+            value={ord}
+            onChange={handleOrdEndring}
+            placeholder={`Skriv et ord med ${onsketLengde} bokstaver...`}
+            style={{
+              padding: '12px',
+              width: '100%',
+              border: '2px solid #ced4da',
+              borderRadius: '6px',
+              fontSize: '16px',
+              boxSizing: 'border-box'
+            }}
+          />
+        </div>
+
+        {/* Tilbakemelding */}
+        {tilbakemelding && (
+          <div style={{
+            padding: '15px',
+            backgroundColor: tilbakemelding.type === 'success' ? '#d4edda' : '#f8d7da',
+            border: `1px solid ${tilbakemelding.type === 'success' ? '#c3e6cb' : '#f5c6cb'}`,
+            borderRadius: '6px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px'
+          }}>
+            <span style={{ fontSize: '24px' }}>
+              {tilbakemelding.emoji}
+            </span>
+            <div>
+              <strong style={{ 
+                color: tilbakemelding.type === 'success' ? '#155724' : '#721c24' 
+              }}>
+                {tilbakemelding.melding}
+              </strong>
+            </div>
+          </div>
+        )}
+
+        {/* Vis antall bokstaver */}
+        {ord && (
+          <div style={{ 
+            marginTop: '10px',
+            padding: '8px 12px',
+            backgroundColor: '#e9ecef',
+            border: '1px solid #dee2e6',
+            borderRadius: '4px',
+            fontSize: '14px',
+            color: '#495057'
+          }}>
+            <strong>Antall bokstaver:</strong> {antallBokstaver} 
+            {antallBokstaver !== ord.replace(/\s/g, '').length && 
+              ` (${ord.replace(/\s/g, '').length} uten mellomrom)`}
+          </div>
+        )}
+      </div>
+
+      {/* Del b) Tilfeldig lengde */}
+      <div style={{ 
+        padding: '20px', 
+        border: '2px solid #28a745',
+        borderRadius: '8px',
+        backgroundColor: '#f8f9fa'
+      }}>
+        <h3 style={{ marginTop: 0, color: '#28a745' }}>b) Tilfeldig ordlengde</h3>
+        
+        <div style={{ marginBottom: '15px' }}>
+          <p style={{ color: '#495057', marginBottom: '15px' }}>
+            Nå skal du skrive et ord med <strong>{onsketLengde}</strong> bokstaver!
+          </p>
+          
+          <button
+            onClick={genererTilfeldigLengde}
+            style={{
+              padding: '10px 20px',
+              backgroundColor: '#28a745',
+              color: 'white',
+              border: 'none',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontSize: '16px',
+              fontWeight: 'bold'
+            }}
+          >
+            Generer ny tilfeldig lengde
+          </button>
+        </div>
+
+        <div style={{ 
+          padding: '12px',
+          backgroundColor: '#e9ecef',
+          border: '1px solid #dee2e6',
+          borderRadius: '6px',
+          fontSize: '14px',
+          color: '#495057'
+        }}>
+          <strong>Nåværende utfordring:</strong> Skriv et ord med <strong>{onsketLengde}</strong> bokstaver
+        </div>
+      </div>
+
+      {/* Eksempler */}
+      <div style={{ 
+        marginTop: '30px', 
+        padding: '15px', 
+        backgroundColor: '#fff3cd', 
+        border: '1px solid #ffeaa7',
+        borderRadius: '8px'
+      }}>
+        <h4 style={{ marginTop: 0, color: '#856404' }}>Eksempler:</h4>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '10px' }}>
+          <div>
+            <strong>Ordet "sitron":</strong>
+            <div>✅ 6 bokstaver - gir tommel opp</div>
+          </div>
+          <div>
+            <strong>Ordet "lime":</strong>
+            <div>❌ 4 bokstaver - gir tommel ned</div>
+          </div>
+          <div>
+            <strong>Ordet "eple":</strong>
+            <div>❌ 4 bokstaver - gir tommel ned</div>
+          </div>
+          <div>
+            <strong>Ordet "banan":</strong>
+            <div>✅ 5 bokstaver (hvis ønsket lengde er 5)</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Informasjon */}
+      <div style={{ 
+        marginTop: '20px', 
+        padding: '15px', 
+        backgroundColor: '#e9ecef', 
+        border: '1px solid #dee2e6',
+        borderRadius: '8px',
+        fontSize: '14px'
+      }}>
+        <h4 style={{ marginTop: 0 }}>Funksjonalitet:</h4>
+        <ul style={{ margin: 0, paddingLeft: '20px' }}>
+          <li><strong>a)</strong> Sjekker om ordet har riktig antall bokstaver og gir tommel opp/ned</li>
+          <li><strong>b)</strong> Genererer tilfeldig lengde (3-12 bokstaver) for hver ny utfordring</li>
+          <li>Mellomrom ignoreres ved telling av bokstaver</li>
+          <li>Live oppdatering mens du skriver</li>
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+export default Oppgave151;

@@ -68,7 +68,6 @@ const Oppgave147 = () => {
               <tr style={{ backgroundColor: '#e9ecef' }}>
                 <th style={{ padding: '10px', border: '1px solid #dee2e6', textAlign: 'left' }}>Metode</th>
                 <th style={{ padding: '10px', border: '1px solid #dee2e6', textAlign: 'left' }}>Beskrivelse</th>
-                <th style={{ padding: '10px', border: '1px solid #dee2e6', textAlign: 'left' }}>Eksempelverdi</th>
               </tr>
             </thead>
             <tbody>
@@ -79,9 +78,6 @@ const Oppgave147 = () => {
                   </td>
                   <td style={{ padding: '8px', border: '1px solid #dee2e6' }}>
                     {method.description}
-                  </td>
-                  <td style={{ padding: '8px', border: '1px solid #dee2e6', fontFamily: 'monospace', fontSize: '12px' }}>
-                    {eval(`currentTime.${method.method.replace('()', '')}`)}
                   </td>
                 </tr>
               ))}
